@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-sans leading-tight;
+  }
+  h1 {
+    @apply text-5xl mb-3 font-medium
+  }
+  h3 {
+    @apply text-2xl font-medium mb-5
+  }
+  h5 {
+      @apply text-lg mb-3 font-medium
+  }
+  p {
+    @apply text-lg font-light
+  }
+}
