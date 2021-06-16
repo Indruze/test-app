@@ -18,16 +18,16 @@ function Dropdown({
   if (align === "left") classes += " left-0";
   else classes += " right-0";
 
-  const createOption = o => {
-    const OptionTag = o.link ? "a" : "div"
+  const createOption = option => {
+    const OptionTag = option.link ? "a" : "div"
     return (
       <OptionTag
-        key={o.id}
+        key={option.id}
         className="flex items-center px-3 py-3 cursor-pointer hover:bg-gray-200 font-light text-sm focus:outline-none"
-        href={o.link}
+        href={option.link}
       >
-        {o.icon ? <div className="mr-2">{o.icon}</div> : null}
-        {o.text}
+        {option.icon ? <div className="mr-2">{option.icon}</div> : null}
+        {option.text}
       </OptionTag>
     )
   };

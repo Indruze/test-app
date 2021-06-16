@@ -1,29 +1,20 @@
 import React, { useState } from "react";
 import InfoCard from '../common/InfoCard';
 import Button from '../common/Button';
+import { useTranslation, Trans } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 
 const Overview = () => {
-    const initialValue = [{
-          "title": "Tittel",
-          "subtitle": "Proin orci justo, vulputate quis ex non, tempus blandit orci. Cras auctor tortor sit\
-            amet dui aliquet viverra. Curabitur commodo, enim in aliquet volutpat, tortor arcu\
-            rutrum erat, nec tempus augue quam eu felis.",
-          "description": "Curabitur id massa quis dolor tincidunt finibus. Mauris commodo velit eleifend lacinia\
-            elementum. Phasellus nunc augue, fermentum vitae lorem a, tempor rhoncus nibh. Fusce\
-            aliquam, risus eleifend lacinia rhoncus, erat quam aliquam augue, a ornare nibh nibh eget\
-            lacus.Maecenas hendrerit ipsum ac mi mattis ultrices. Ut lacinia lacus eget libero luctus laoreet.\
-            Duis sit amet tellus euismod, viverra ipsum sed, imperdiet est. Aliquam vulputate venenatis\
-            ante, vel posuere nulla ornare ac."
-        },
-    ]
-  
-    const [ messages, setMessages ] = useState(initialValue);
+    const [t] = useTranslation();
+    const initialState = t("news", { returnObjects: true })
+
+    const [ messages, setMessages ] = useState(initialState);
     const [ showModal, setShowModal ] = React.useState(false);
-    const [ value, setValue ] = React.useState({title: '', subtitle: '', description: ''});
+    const [ value, setValue ] = React.useState({newsTitle: '', newsSubtitle: '', newsContent: ''});
+    let name = 'Jesper Knut Sørvaag';
 
     const handleChange = e => {
       setValue({
@@ -40,16 +31,20 @@ const Overview = () => {
     };
 
     const addMessage = data => {
-      const newMessages = [...messages, { title: data.title, subtitle: data.subtitle, description: data.description }];
+      const newMessages = [...messages, { newsTitle: data.title, newsSubtitle: data.subtitle, newsContent: data.description }];
       setMessages(newMessages);
     };
   
     return (
         <div className="m-10">
-          <h1>Overview</h1>
-          <p className="mb-4">For <b>Jesper Knut Sørvaag</b></p>
+          <h1>{t("homePageTitle")}</h1>
+          <p className="mb-4">
+            <Trans i18nKey="homePageSubtitle">
+              <b>{{name}}</b>
+            </Trans>
+          </p>
           <Button
-            content="Add Something new"
+            content={t("addSomethingNewButtonTitle")}
             onClick={() => setShowModal(true)}
             iconPosition="left"
             icon={<FontAwesomeIcon icon={faPlus} />}
@@ -65,10 +60,10 @@ const Overview = () => {
                     >
                       <div className="mb-4">
                         <label className="block text-gray-700 text-sm font-bold mb-2">
-                          Title
+                          {t("formTitle")}
                         </label>
                         <input
-                          value={value.title}
+                          value={value.title || ''}
                           name="title"
                           type="text"
                           className="shadow border rounded w-full py-2 px-3 focus:outline-none focus:shadow-outline"
@@ -77,10 +72,10 @@ const Overview = () => {
                       </div>
                       <div className="mb-6">
                         <label className="block text-gray-700 text-sm font-bold mb-2">
-                          Subtitle
+                          {t("formSubtitle")}
                         </label>
                         <textarea
-                          value={value.subtitle}
+                          value={value.subtitle || ''}
                           type="text"
                           name="subtitle"
                           className="shadow border rounded w-full p-5 focus:outline-none focus:shadow-outline"
@@ -89,10 +84,10 @@ const Overview = () => {
                       </div>
                       <div className="mb-6">
                         <label className="block text-gray-700 text-sm font-bold mb-2">
-                          Description
+                          {t("formDescription")}
                         </label>
                         <textarea
-                          value={value.description}
+                          value={value.description || ''}
                           type="text"
                           name="description"
                           className="shadow border rounded w-full p-5 focus:outline-none focus:shadow-outline h-52"
@@ -118,26 +113,24 @@ const Overview = () => {
               <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
             </>
           ): null}
-            <div className="flex flex-col lg:flex-row my-10">
-              <div className="w-full lg:w-3/4 mr-0 lg:mr-10">
+            <div className="flex flex-col xl:flex-row my-10">
+              <div className="w-full xl:w-3/4 mr-0 xl:mr-10">
               {messages.map(message => {
                   return (
                       <InfoCard
-                          title={message.title}
-                          subtitle={message.subtitle}
-                          text={message.description}
+                          key={message.id}
+                          title={message.newsTitle}
+                          subtitle={message.newsSubtitle}
+                          text={message.newsContent}
                       />
                   )
               })}
               </div>
-            <div className="w-full lg:w-1/4 mt-12 lg:mt-0">
+            <div className="w-full xl:w-1/4 mt-12 xl:mt-0">
               <InfoCard
-                subtitle="How can we help?"
-                text="Sed feugiat venenatis mollis. Aliquam
-                  fermentum, enim facilisis finibus suscipit,
-                  dolor libero dapibus lorem, eget consequat
-                  lacus magna eget neque. "
-                  button
+                subtitle={t("helpFiledTitle")}
+                text={t("helpFieldContent")}
+                button
               />
             </div>
             </div>
