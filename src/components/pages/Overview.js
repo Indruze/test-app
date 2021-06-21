@@ -10,7 +10,6 @@ import {
 const Overview = () => {
     const [t] = useTranslation();
     const initialState = t("news", { returnObjects: true })
-
     const [ messages, setMessages ] = useState(initialState);
     const [ showModal, setShowModal ] = React.useState(false);
     const [ value, setValue ] = React.useState({newsTitle: '', newsSubtitle: '', newsContent: ''});

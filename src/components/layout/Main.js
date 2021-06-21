@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, Suspense } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -15,16 +15,15 @@ import Sidebar from "../common/Sidebar";
 import Avatar from "../common/Avatar";
 import Dropdown from "../common/Dropdown";
 
-import Overview from "../pages/Overview";
-import Messages from "../pages/Messages";
-import Shop from "../pages/Shop";
-import Reports from "../pages/Reports";
-import Settings from "../pages/Settings";
+const Overview = React.lazy(() => import("../pages/Overview"));
+const Messages = React.lazy(() => import("../pages/Messages"));
+const Shop = React.lazy(() => import("../pages/Shop"));
+const Reports = React.lazy(() => import("../pages/Reports"));
+const Settings = React.lazy(() => import("../pages/Settings"));
 
 const Main = () => {
     const [t] = useTranslation();
     let [openDropdown, setOpenDropdown] = useState(false);
-
 
     return (
         <div className="flex bg-gray-50">
@@ -62,13 +61,15 @@ const Main = () => {
                         />
                     </div>
                 </div>
-                <Switch>
-                    <Route exact path="/" component={Overview} />
-                    <Route path="/messages" component={Messages} />
-                    <Route exact path="/shop" component={Shop} />
-                    <Route path="/reports" component={Reports} />
-                    <Route exact path="/settings" component={Settings} />
-                </Switch>
+                <Suspense fallback={<div>Loading...</div>}>
+                    <Switch>
+                        <Route exact path="/" component={Overview} />
+                        <Route path="/messages" component={Messages} />
+                        <Route exact path="/shop" component={Shop} />
+                        <Route path="/reports" component={Reports} />
+                        <Route exact path="/settings" component={Settings} />
+                    </Switch>
+                </Suspense>
             </div>
         </div>
     )
