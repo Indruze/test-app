@@ -11,6 +11,7 @@ import {
   faBars,
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
+import Logo from '../../assets/Telia_Logo.svg';
 
 const Sidebar = () => {
   const [t] = useTranslation();
@@ -34,7 +35,8 @@ const Sidebar = () => {
       />
       <a href="/" className="no-underline block mt-3">
         <img
-          src="https://upload.wikimedia.org/wikipedia/commons/e/e8/Telia_Scandinavia_Logo.svg"
+          alt="Telia logo"
+          src={Logo}
           className="w-20 ml-4"
         />
       </a>
